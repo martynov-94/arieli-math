@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Arieli Math Game</title>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  </head>
+
+  <body>
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <div id="app">
+      <div class="game-container">
+        <div class="cells">
+          <div v-for="cell in cells" class="cell">{{ cell }}</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const App = {
+        data() {
+          return {
+            cellsNumber: 12,
+            cells: [],
+          }
+        },
+
+        mounted() {
+          this.generateRandomNumbers();
+        },
+
+        methods: {
+          generateRandomNumbers() {
+            const generateFormattedNumber = () => (Math.random() * 10).toFixed(2);
+
+            const rightNumber1 = generateFormattedNumber();
+            const rightNumber2 = (10 - rightNumber1).toFixed(2);
+
+            for (let i = 0; i < this.cellsNumber - 2; i++) {
+              this.cells.push(generateFormattedNumber());
+            }
+
+            const randomIndex1 = Math.floor(Math.random() * (this.cellsNumber - 1));
+            this.cells.splice(randomIndex1, 0, rightNumber1);
+
+            const randomIndex2 = Math.floor(Math.random() * (this.cellsNumber));
+            this.cells.splice(randomIndex2, 0, rightNumber2);
+
+            
+          },
+        }
+      };
+
+      function dateToReadableString(date) {
+        var monthNames = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+        
+        return date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
+      };
+
+      Vue.createApp(App).mount('#app');
+    </script>
+  </body>
+</html>
